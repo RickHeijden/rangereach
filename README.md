@@ -2,7 +2,7 @@
 
 <p align="justify">The proliferation of location-based services and social networks has given rise to <em>geosocial networks</em>, which model not only the social interactions between users but also their spatial activities. We study the efficient computation of a recently proposed query for geosocial networks called <em>Geosocial Reachability</em> query (RangeReach), which comes as a hybrid of the traditional spatial selection (range) query and the graph reachability problem. Intuitively, given a geosocial network <em>G</em>, a vertex <em>v</em>, and a spatial region <em>R</em>, RangeReach(<em>G,v,R</em>) determines whether <em>v</em> can reach any vertex in <em>G</em> with spatial activity inside <em>R</em>. We consider an interval-based labeling scheme proposed in the past for graph reachability to devise two novel solutions for RangeReach. The first takes a social-first approach, prioritizing the graph reachability predicate.  The second treats both predicates at the same time by transforming the problem of answering RangeReach queries into queries over a three-dimensional space that models the spatial and interval-based reachability information in the geosocial network. Our experimental analysis compares our proposed solutions against a baseline spatial-first approach powered by spatial indexing and a graph reachability technique, as well as the state-of-the-art method for RangeReach queries.</p>
 <figure>
-  <img src="/figures/running+query3.png" width="400" alt="RangeReach example" />
+  <img src="./figures/running+query3.png" width="400" alt="RangeReach example" />
 </figure>
 
 Source code from the following publication:
