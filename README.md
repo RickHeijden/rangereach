@@ -1,3 +1,54 @@
+# Even Faster Geosocial Reachability Queries
+
+<p align="justify">Geosocial reachability queries (RangeReach) determine whether a given vertex in a geosocial network can reach any 
+spatial vertex within a query region. The state-of-the-art 3DReach method answers such queries by encoding graph reachability through 
+interval labelling and indexing spatial vertices in a 3D R-tree. We present 2DReach, a simpler approach that avoids interval labelling entirely. Like 3DReach, 2DReach collapses strongly connected components (SCCs) into a DAG, but instead of computing interval labels, it directly stores a 2D R-tree per component over all reachable spatial vertices. A query then reduces to a single 2D R-tree lookup. We further propose compressed variants that reduce storage by excluding spatial sinks and sharing R-trees between components with identical reachable sets. Experiments on four real-world datasets show that 2DReach achieves faster index construction than 3DReach, with the compressed variant yielding the smallest index size among all methods. 2DReach delivers competitive or superior query performance with more stable response times across varying query parameters.</p>
+
+Source code from the following paper:
+- <p align="justify">Rick van der Heijden, Nikolay Yakovets, and Thekla Hamm, <i>Even Faster Geosocial Reachability Queries</i>, https://arxiv.org/abs/2602.05928</p> 
+
+This is a fork from the source code of "Fast Geosocial Reachability Queries", available at https://github.com/pbour/rangereach. Their explanation is still available below. The information provided here is seen as an extension of the available description below.
+
+## Runs Extension
+This fork contains an extension on the original evaluation methods, additional description at [Runs](#Runs) 
+
+### 2DReach
+Prerequisites: [DAG](#directed-acyclic-graph)
+```
+$ ./run_2dreach.exec inputs/yelp/yelp queries/yelp/queries-range-degree.0.1-2.txt.qry
+```
+
+### 2DReach-Comp
+Prerequisites: [DAG](#directed-acyclic-graph)
+```
+$ ./run_2dreach_comp.exec inputs/yelp/yelp queries/yelp/queries-range-degree.0.1-2.txt.qry
+```
+
+### 2DReach-Pointer
+Prerequisites: [DAG](#directed-acyclic-graph)
+```
+$ ./run_2dreach_pointer.exec inputs/yelp/yelp queries/yelp/queries-range-degree.0.1-2.txt.qry
+```
+
+## Experiments Extension
+Instructions on how to execute the experiments are in the [Experiments](#Experiments) section.
+
+### Indexing costs Extension
+The index size can be found in the execute queries report of every method.
+
+The index time can be calculated for each method, as follows:
+- 2DReach, the [create time for DAG](#directed-acyclic-graph), plus the 2D R-tree and pointer structure building time reported when executing a query file.
+- 2DReach-Comp, the [create time for DAG](#directed-acyclic-graph), plus the 2D R-tree and compressed pointer structure building time reported when executing a query file.
+- 2DReach-Pointer, the [create time for DAG](#directed-acyclic-graph), plus the 2D R-tree and pointer structure building time reported when executing a query file.
+
+Indexing time of other methods can be found at the [Indexing costs](#Indexing-costs) section.
+
+To evaluate the indexing time of the prerequisites execute the following script:
+```
+$ ./scripts/run_creates.sh
+```
+
+
 # Fast Geosocial Reachability Queries
 
 <p align="justify">The proliferation of location-based services and social networks has given rise to <em>geosocial networks</em>, which model not only the social interactions between users but also their spatial activities. We study the efficient computation of a recently proposed query for geosocial networks called <em>Geosocial Reachability</em> query (RangeReach), which comes as a hybrid of the traditional spatial selection (range) query and the graph reachability problem. Intuitively, given a geosocial network <em>G</em>, a vertex <em>v</em>, and a spatial region <em>R</em>, RangeReach(<em>G,v,R</em>) determines whether <em>v</em> can reach any vertex in <em>G</em> with spatial activity inside <em>R</em>. We consider an interval-based labeling scheme proposed in the past for graph reachability to devise two novel solutions for RangeReach. The first takes a social-first approach, prioritizing the graph reachability predicate.  The second treats both predicates at the same time by transforming the problem of answering RangeReach queries into queries over a three-dimensional space that models the spatial and interval-based reachability information in the geosocial network. Our experimental analysis compares our proposed solutions against a baseline spatial-first approach powered by spatial indexing and a graph reachability technique, as well as the state-of-the-art method for RangeReach queries.</p>
